@@ -1,15 +1,7 @@
 
 open System
 open System.Diagnostics
-open System.ComponentModel
 open System.Net.Sockets
-open System.Runtime.InteropServices
-open System.IO
-
-// [<DllImport("user32.dll", CallingConvention = CallingConvention.Cdecl)>]
-// let windowHandle = Process.GetCurrentProcess().MainWindowHandle
-// extern void ShowWindow()
-// ShowWindow(windowHandle, 0)
 
 let asciiEncode (s: string): byte [] =
     Text.Encoding.ASCII.GetBytes(s)
@@ -26,6 +18,7 @@ let runCommand (cmd: string): string * string  =
     p.StartInfo.RedirectStandardOutput <- true
     p.StartInfo.RedirectStandardError <- true
     p.StartInfo.UseShellExecute <- false
+    p.StartInfo.CreateNoWindow <- true
     p.Start() |> ignore
     let stdout = p.StandardOutput.ReadToEnd()
     let stderr = p.StandardError.ReadToEnd()
